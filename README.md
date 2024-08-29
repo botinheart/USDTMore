@@ -61,6 +61,11 @@ USDTMore 所有参数都是以传递环境变量的方式进行配置，大部�
 - [Linux 手动安装教程](./docs/systemd.md)
 - [Linux 时钟同步配置](./docs/systemd-timesyncd.md)
 
+## 插件集成
+
+- [异次元](./plugins/acg-faka/README.md)
+- [独角数卡](./plugins/dujiaoka/README.md)
+
 ## 🤔 常见问题
 
 ### 如何获取参数 TG_BOT_ADMIN_ID
