@@ -2,7 +2,10 @@ find . -name ".DS_Store" -exec rm -f {} \;
 
 rm -rf out
 
-dpkg-source --commit-using=":" --unapply-patches --skip-patch -b .
-
 chmod 755 debian/*.ex
+cp debian/postinst.ex debian/postinst
+cp debian/postrm.ex debian/postrm
+chmod 755 debian/postinst
+chmod 755 debian/postrm
+
 debuild -us -uc

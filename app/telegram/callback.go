@@ -334,6 +334,9 @@ func getWalletInfoETH(name string, unit string, chain string, host string, apiKe
 		if length > 0 {
 			rawValue = rawValue[0:length]
 		}
+		if length <= 0 {
+			rawValue = "0"
+		}
 	}
 	balanceStandard, ok := new(big.Int).SetString(rawValue, 10)
 	if ok {
