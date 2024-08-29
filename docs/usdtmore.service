@@ -1,0 +1,20 @@
+[Unit]
+Description=USDT Payment Gateway for More Chains
+After=network.target syslog.target
+
+[Service]
+User=usdt
+Group=usdt
+EnvironmentFile=/etc/usdtmore.conf
+WorkingDirectory=/var/lib/usdtmore/
+Environment=ERRFILE=SYSLOG
+Environment=OUTFILE=SYSLOG
+
+ExecStart=/usr/bin/usdtmore
+ExecStop=/usr/bin/pkill -9 usdtmore
+ExecReload=/usr/bin/pkill -9 usdtmore && /usr/bin/usdtmore
+
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

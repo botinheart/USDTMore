@@ -1,0 +1,48 @@
+# Maintainer: support <support@ovsea.net>
+
+pkgname=USDTMore
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="USDT Payment Gateway for More Chain"
+arch=('x86_64')
+url="https://github.com/botinheart/USDTMore"
+license=('GPL3')
+depends=(nginx)
+options=()
+source=("${pkgname}-${pkgver}.zip" "systemd-sysusers.conf")        
+sha256sums=(
+            '14059ecb7073a0b7255051e53209b130d440a25c837d25b6c1d20ffdf16c63b4'
+            '9b663969bce2f854ef7b162b672561de10477401b2263cd43e4dd098b3f37875'
+           )
+
+prepare() {
+    cd "$srcdir/$pkgname-$pkgver/"
+}
+
+build() {
+    cd "$srcdir/$pkgname-$pkgver/main/"
+    CGO_ENABLED=0 go build -a -ldflags '-extldflags "-static"' -o usdtmore
+}
+
+package() {
+    backup=("etc/usdtmore.conf"
+            "etc/nginx/vhost/usdtmore.conf"
+    )
+
+    install -Dm755 "$srcdir/$pkgname-$pkgver/main/usdtmore" "$pkgdir/usr/bin/usdtmore"
+    install -d -m777 "$pkgdir/var/lib/usdtmore/"
+    install -d -m777 "$pkgdir/var/log/usdtmore/"
+    install -d -m777 "$pkgdir/usr/share/usdtmore/"
+    install -Dm644 "$srcdir/$pkgname-$pkgver/docs/usdtmore.conf" "$pkgdir/etc/usdtmore.conf"
+    install -Dm644 "$srcdir/$pkgname-$pkgver/docs/nginx/usdtmore.conf" "$pkgdir/etc/nginx/vhost/usdtmore.conf"
+    install -Dm644 "$srcdir/$pkgname-$pkgver/docs/usdtmore.service" "${pkgdir}"/usr/lib/systemd/system/usdtmore.service
+    install -m 755 -d "${pkgdir}/usr/lib/sysusers.d"
+    install -m 644 "$srcdir/../systemd-sysusers.conf" "${pkgdir}/usr/lib/sysusers.d/usdtmore.conf"
+
+    cp -rf "$srcdir/$pkgname-$pkgver/static" "$pkgdir/usr/share/usdtmore/"
+    cp -rf "$srcdir/$pkgname-$pkgver/templates" "$pkgdir/usr/share/usdtmore/"
+    chmod -R 744 "$pkgdir/usr/share/usdtmore"
+    chown -R usdt:usdt "$pkgdir/var/lib/usdtmore"
+    chown -R usdt:usdt "$pkgdir/var/log/usdtmore"
+    chown -R usdt:usdt "$pkgdir/usr/share/usdtmore"
+}
