@@ -376,7 +376,7 @@ func GetTemplatePath() string {
 	if data := help.GetEnv("HTML_DIR"); data != "" {
 		return strings.TrimSpace(data) + "/templates/*"
 	}
-	return runPath + "/../templates/*"
+	return runPath + "/templates/*"
 }
 
 /*
@@ -386,7 +386,7 @@ func GetStaticPath() string {
 	if data := help.GetEnv("HTML_DIR"); data != "" {
 		return strings.TrimSpace(data) + "/static/"
 	}
-	return runPath + "/../static/"
+	return runPath + "/static/"
 }
 
 /*
