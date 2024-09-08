@@ -10,4 +10,14 @@ docker build -t archlinux-usdtmore .
 
 # 运行docker镜像
 docker run -d --restart=always --name usdtmore -p 6080:6080 -e TG_BOT_TOKEN=机器人的TOKEN -e TG_BOT_ADMIN_ID=管理员的ID  -e AUTH_TOKEN=密钥 -e REWRITE_HTTPS=true archlinux-usdtmore
+
+# 查看docker进程
+docker ps
+
+# 进入docker系统
+docker exec -it [pid] /bin/bash
+
+# 进入运行目录
+[root@e3933add0367 /]# cd /runtime/ && ls -ls
+
 ```
